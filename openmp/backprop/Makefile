@@ -1,10 +1,9 @@
 # C compiler
-CC = gcc
-CC_FLAGS = -g -fopenmp  -O2
-
+CC = clang
+CC_FLAGS = -Xclang -fopenmp -g -O2
 
 backprop: backprop.o facetrain.o imagenet.o backprop_kernel.o 
-	$(CC) $(CC_FLAGS) backprop.o facetrain.o imagenet.o backprop_kernel.o -o backprop -lm
+	$(CC) $(CC_FLAGS) backprop.o facetrain.o imagenet.o backprop_kernel.o -o backprop -lm -lomp
 
 %.o: %.[ch]
 	$(CC) $(CC_FLAGS) $< -c

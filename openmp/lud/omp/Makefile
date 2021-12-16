@@ -21,7 +21,7 @@ CXX             := g++
 # ------------  compiler flags  ------------------------------------------------
 DEBUG_CFLAGS    := -Wall -O0 -g
 RELEASE_CFLAGS  := -Wall -O3 
-COMMON_CFLAGS   := -fopenmp
+COMMON_CFLAGS   := -Xclang -fopenmp
 
 # ------------  compiler defs  ------------------------------------------------
 DEBUG_CDEFS    := 
@@ -31,7 +31,7 @@ COMMON_CDEFS   :=
 # ------------  linker flags  --------------------------------------------------
 DEBUG_LDFLAGS    := -g
 RELEASE_LDFLAGS  := 
-COMMON_LDFLAGS   := -fopenmp 
+COMMON_LDFLAGS   := -Xclang -fopenmp 
 
 ifeq (YES, ${DEBUG})
   CFLAGS       := ${DEBUG_CFLAGS} ${DEBUG_CDEFS}
@@ -60,7 +60,7 @@ GLOBAL_INC_DIR  =
 LOCAL_INC_DIR   = ../common
 
 # ------------  system libraries  (e.g. -lm )  ---------------------------------
-SYS_LIBS        = -lm
+SYS_LIBS        = -lm -lomp
 
 # ------------  additional system library directories  -------------------------
 GLOBAL_LIB_DIR  =

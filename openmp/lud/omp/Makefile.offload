@@ -60,7 +60,7 @@ GLOBAL_INC_DIR  =
 LOCAL_INC_DIR   = ../common
 
 # ------------  system libraries  (e.g. -lm )  ---------------------------------
-SYS_LIBS        = -lm
+SYS_LIBS        = -lm -lomp
 
 # ------------  additional system library directories  -------------------------
 GLOBAL_LIB_DIR  =

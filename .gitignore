@@ -4,3 +4,8 @@ backprop
 nn
 hurricane_gen
 heartwall
+kmeans
+srad
+lud_omp
+needle
+needle.dSYM

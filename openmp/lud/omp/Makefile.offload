@@ -2,6 +2,8 @@
 #
 #
 
+UNAME_S := $(shell uname -s)
+
 # DEBUG can be set to YES to include debugging info, or NO otherwise
 DEBUG          := NO
 
@@ -60,7 +62,12 @@ GLOBAL_INC_DIR  =
 LOCAL_INC_DIR   = ../common
 
 # ------------  system libraries  (e.g. -lm )  ---------------------------------
-SYS_LIBS        = -lm -lomp
+ifeq ($(UNAME_S),Linux)
+	SYS_LIBS        = -lm
+endif
+ifeq ($(UNAME_S),Darwin)
+	SYS_LIBS        = -lm -lomp
+endif
 
 # ------------  additional system library directories  -------------------------
 GLOBAL_LIB_DIR  =

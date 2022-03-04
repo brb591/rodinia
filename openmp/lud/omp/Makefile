@@ -2,6 +2,8 @@
 #
 #
 
+UNAME_S := $(shell uname -s)
+
 # DEBUG can be set to YES to include debugging info, or NO otherwise
 DEBUG          := NO
 
@@ -15,13 +17,24 @@ EXECUTABLE      := lud_omp
 SOURCES         := lud.c lud_omp.c ../common/common.c 
 
 # ------------  compiler  ------------------------------------------------------
-CC              := gcc
-CXX             := g++
+ifeq ($(UNAME_S),Linux)
+	CC              := gcc
+	CXX             := g++
+	COMMON_CFLAGS   := -fopenmp
+	COMMON_LDFLAGS  := -fopenmp
+	SYS_LIBS        = -lm
+endif
+ifeq ($(UNAME_S),Darwin)
+	CC              := clang
+	CXX             := clang
+	COMMON_CFLAGS   := -Xclang -fopenmp
+	COMMON_LDFLAGS  := -Xclang -fopenmp
+	SYS_LIBS				= -lm -lomp
+endif
 
 # ------------  compiler flags  ------------------------------------------------
 DEBUG_CFLAGS    := -Wall -O0 -g
 RELEASE_CFLAGS  := -Wall -O3 
-COMMON_CFLAGS   := -Xclang -fopenmp
 
 # ------------  compiler defs  ------------------------------------------------
 DEBUG_CDEFS    := 
@@ -31,7 +44,6 @@ COMMON_CDEFS   :=
 # ------------  linker flags  --------------------------------------------------
 DEBUG_LDFLAGS    := -g
 RELEASE_LDFLAGS  := 
-COMMON_LDFLAGS   := -Xclang -fopenmp 
 
 ifeq (YES, ${DEBUG})
   CFLAGS       := ${DEBUG_CFLAGS} ${DEBUG_CDEFS}
@@ -58,9 +70,6 @@ GLOBAL_INC_DIR  =
 
 # ------------  private include directories  -----------------------------------
 LOCAL_INC_DIR   = ../common
-
-# ------------  system libraries  (e.g. -lm )  ---------------------------------
-SYS_LIBS        = -lm -lomp
 
 # ------------  additional system library directories  -------------------------
 GLOBAL_LIB_DIR  =

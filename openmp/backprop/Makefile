@@ -1,7 +1,7 @@
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Linux)
 	CC = gcc
-	CCFLAGS -g -fopenmp -O2
+	CCFLAGS = -g -fopenmp -O2
 	LDFLAGS = -lm
 endif
 ifeq ($(UNAME_S),Darwin)
@@ -27,7 +27,6 @@ backprop_kernel.o: backprop_kernel.c backprop.h
 
 imagenet.o: imagenet.c backprop.h
 	$(CC) $(CCFLAGS) imagenet.c -c
-
 
 clean:
 	rm -f *.o *~ backprop

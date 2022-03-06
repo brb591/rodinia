@@ -11,3 +11,4 @@ openmp/nw/needle
 needle.dSYM
 openmp/srad/srad_v1/image_out.pgm
 openmp/srad/srad_v1/srad
+openmp/b+tree/b+tree.out

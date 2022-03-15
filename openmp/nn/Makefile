@@ -1,8 +1,14 @@
-LOCAL_CC = gcc -g -O3 -Wall
-CC = clang
-CC_FLAGS = -Xclang -fopenmp -g -O2
-CFLAGS = -lm -fopenmp -Wall
-
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Linux)
+	CC = gcc
+	CCFLAGS = -g -fopenmp -O2
+	LDFLAGS = -lm
+endif
+ifeq ($(UNAME_S),Darwin)
+	CC = clang
+	CCFLAGS = -Xclang -fopenmp -g -O2
+	LDFLAGS = -lm -lomp
+endif
 
 all : nn hurricane_gen
 
@@ -10,13 +16,13 @@ clean :
 	rm -rf *.o nn hurricane_gen
 
 nn : nn_openmp.o
-	$(CC) $(CC_FLAGS) nn_openmp.o -o nn -lm -lomp 
+	$(CC) $(CCFLAGS) nn_openmp.o -o nn $(LDFLAGS) 
 
 hurricane_gen : hurricane_gen.o
-	$(CC) $(CC_FLAGS) hurricane_gen.o -o hurricane_gen -lm -lomp
+	$(CC) $(CCFLAGS) hurricane_gen.o -o hurricane_gen $(LDFLAGS)
 
 nn_openmp.o: nn_openmp.c
-	$(CC) $(CC_FLAGS) nn_openmp.c -c
+	$(CC) $(CCFLAGS) nn_openmp.c -c
 
 hurricane_gen.o: hurricane_gen.c
-	$(CC) $(CC_FLAGS) hurricane_gen.c -c
+	$(CC) $(CCFLAGS) hurricane_gen.c -c

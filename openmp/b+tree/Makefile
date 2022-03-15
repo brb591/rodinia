@@ -10,10 +10,6 @@ ifeq ($(UNAME_S),Darwin)
 	LDFLAGS = -lm -lomp
 endif
 
-C_C = gcc
-OMP_LIB = -lgomp
-OMP_FLAG = -fopenmp
-
 b+tree.out:	./main.o ./kernel/kernel_cpu.o ./kernel/kernel_cpu_2.o ./util/timer/timer.o ./util/num/num.o
 	$(CC)	$(CCFLAGS) ./main.o ./kernel/kernel_cpu.o ./kernel/kernel_cpu_2.o ./util/timer/timer.o ./util/num/num.o -o b+tree.out $(LDFLAGS)
 

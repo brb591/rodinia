@@ -12,3 +12,7 @@ needle.dSYM
 openmp/srad/srad_v1/image_out.pgm
 openmp/srad/srad_v1/srad
 openmp/b+tree/b+tree.out
+openmp/nn/nn
+openmp/nn/hurricane_gen
+openmp/nw/result.txt
+openmp/b+tree/output.txt

@@ -1,9 +1,18 @@
-# C compiler
-CC = g++
-CC_FLAGS = -g -Xclang -fopenmp -O2
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Linux)
+	CC = gcc
+	CCFLAGS = -g -fopenmp -O2
+	LDFLAGS = -lm
+endif
+ifeq ($(UNAME_S),Darwin)
+	CC = clang
+	CCFLAGS = -Xclang -fopenmp -g -O2
+	LDFLAGS = -lm -lomp
+endif
 
-bfs: 
-	$(CC) $(CC_FLAGS) srad.cpp -o srad -lomp
+srad: srad.cpp
+	$(CC) $(CCFLAGS) srad.cpp -o srad $(LDFLAGS)
 
 clean:
 	rm -f srad
+	rm -rf srad.dSYM

@@ -1,24 +1,32 @@
-# C compiler
-CC = gcc
-CC_FLAGS = -g -fopenmp -O2 
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Linux)
+	CC = gcc
+	CCFLAGS = -g -fopenmp -O2
+	LDFLAGS = -lm
+endif
+ifeq ($(UNAME_S),Darwin)
+	CC = clang
+	CCFLAGS = -Xclang -fopenmp -g -O2
+	LDFLAGS = -lm -lomp
+endif
 
 kmeans: cluster.o getopt.o kmeans.o kmeans_clustering.o 
-	$(CC) $(CC_FLAGS) cluster.o getopt.o kmeans.o kmeans_clustering.o  -o kmeans
+	$(CC) $(CCFLAGS) cluster.o getopt.o kmeans.o kmeans_clustering.o  -o kmeans $(LDFLAGS)
 
 %.o: %.[ch]
-	$(CC) $(CC_FLAGS) $< -c
+	$(CC) $(CCFLAGS) $< -c
 
 cluster.o: cluster.c 
-	$(CC) $(CC_FLAGS) cluster.c -c
+	$(CC) $(CCFLAGS) cluster.c -c
 	
 getopt.o: getopt.c 
-	$(CC) $(CC_FLAGS) getopt.c -c
+	$(CC) $(CCFLAGS) getopt.c -c
 	
 kmeans.o: kmeans.c 
-	$(CC) $(CC_FLAGS) kmeans.c -c
+	$(CC) $(CCFLAGS) kmeans.c -c
 
 kmeans_clustering.o: kmeans_clustering.c kmeans.h
-	$(CC) $(CC_FLAGS) kmeans_clustering.c -c
+	$(CC) $(CCFLAGS) kmeans_clustering.c -c
 
 clean:
 	rm -f *.o *~ kmeans 

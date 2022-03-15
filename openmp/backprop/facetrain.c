@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <math.h>
 #include "backprop.h"
+#include "backprop_kernel.h"
+#include "imagenet.h"
 #include "omp.h"
 
 extern char *strcpy();
@@ -9,7 +11,7 @@ extern void exit();
 
 int layer_size = 0;
 
-backprop_face()
+void backprop_face()
 {
   BPNN *net;
   int i;

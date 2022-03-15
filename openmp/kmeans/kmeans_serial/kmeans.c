@@ -74,6 +74,7 @@
 #include <math.h>
 #include <sys/types.h>
 #include <fcntl.h>
+#include <unistd.h>
 #include <omp.h>
 #include "getopt.h"
 
